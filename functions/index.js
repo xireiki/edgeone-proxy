@@ -7,7 +7,7 @@ export async function onRequest(context) {
 
     try {
         const requestUrl = new URL(request.url);
-        const targetUrlParam = "https://shelf.irena.dpdns.org" + (requestUrl.pathname ?? "/") + (requestUrl.search ?? "");
+        const targetUrlParam = (requestUrl.host.includes("api") || requestUrl.pathname.startsWith("/api") || requestUrl.pathname.startsWith("/dav")) ? "https://rdav-api.xireiki.com" :  "https://shelf.irena.dpdns.org" + (requestUrl.pathname ?? "/") + (requestUrl.search ?? "");
 
         if (!targetUrlParam) {
             return new Response("Query parameter 'url' is missing.", { status: 400 });
