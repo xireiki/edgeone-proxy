@@ -7,14 +7,14 @@ export async function onRequest(context) {
 
     try {
         const requestUrl = new URL(request.url);
-        const targetUrlParam = requestUrl.searchParams.get('url');
+        const targetUrlParam = "https://shelf.irena.dpdns.org" + (requestUrl.pathname ?? "/") + (requestUrl.search ?? "");
 
         if (!targetUrlParam) {
             return new Response("Query parameter 'url' is missing.", { status: 400 });
         }
 
         // **CRITICAL FIX: Use a professional proxy service.**
-        const proxyServiceUrl = 'https://cors-anywhere.herokuapp.com/';
+        const proxyServiceUrl = 'https://cors.irena.dpdns.org/?';
         const actualUrlStr = proxyServiceUrl + targetUrlParam;
 
         // We can now use a much simpler request, as the proxy service will handle headers.
